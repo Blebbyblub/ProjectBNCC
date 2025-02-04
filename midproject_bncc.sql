@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2025 at 08:11 AM
+-- Generation Time: Feb 04, 2025 at 08:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,13 @@ CREATE TABLE `users` (
   `bio` text DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL CHECK (`id` regexp '^A[0-9]{3}$')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `bio`, `photo`) VALUES
+('A001', 'admin', 'BNCC', 'adminBNCC@gmail.com', '0192023a7bbd73250516f069df18b500', 'Hi my name is Admin, and I like backend development.', NULL);
 
 --
 -- Indexes for dumped tables
