@@ -1,59 +1,78 @@
-body {
-  font-family: poppins, sans-serif;
-  background-color: #03fce8;
-  text-align: center;
-}
-
-.login-container {
-  width: 300px;
-  padding: 20px;
-  background: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin: 100px auto;
-  border-radius: 8px;
-}
-
-h2 {
-  margin-bottom: 20px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background: blue;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: darkblue;
-}
-
+/* ===== General Styles ===== */
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-.container {
+/* ===== Container ===== */
+.container,
+.login-container {
   width: 80%;
-  margin: 20px auto;
+  max-width: 400px;
+  margin: 50px auto;
   background: white;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  text-align: left;
 }
 
+/* ===== Headings ===== */
+h1,
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* ===== Forms ===== */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input {
+  padding: 8px;
+  width: 100%;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Show Password Checkbox */
+input[type="checkbox"] {
+  width: auto;
+}
+
+/* Buttons */
+button,
+a.button {
+  background: blue;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+  text-decoration: none;
+}
+
+button:hover,
+a.button:hover {
+  background: darkblue;
+}
+
+/* ===== Table Styling ===== */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -64,6 +83,7 @@ th,
 td {
   border: 1px solid #ddd;
   padding: 10px;
+  text-align: left;
 }
 
 th {
@@ -71,22 +91,49 @@ th {
   color: white;
 }
 
-input {
+/* Search Bar */
+#searchInput {
   padding: 8px;
-  width: 50%;
+  width: 100%;
   margin-bottom: 10px;
 }
 
+/* Links */
 a {
   text-decoration: none;
-  background: blue;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  margin: 5px;
-  display: inline-block;
+  color: blue;
+  margin-right: 10px;
 }
 
 a:hover {
-  background: darkblue;
+  text-decoration: underline;
+}
+
+/* Logout Button */
+.logout {
+  background: red;
+}
+
+.logout:hover {
+  background: darkred;
+}
+
+/* ===== Profile Page Styles ===== */
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  resize: none;
 }

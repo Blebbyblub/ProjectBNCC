@@ -4,7 +4,7 @@ include '../config/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
-    $password = md5($_POST['password']); // MD5 hashing sesuai ketentuan proyek
+    $password = md5($_POST['password']); // MD5 Hashing
 
     $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
     $result = $conn->query($sql);
@@ -12,15 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $_SESSION['user'] = $result->fetch_assoc();
 
-        // Jika Remember Me dicentang, simpan cookie selama 7 hari
+        // If "Remember Me" is checked, store login in cookies for 7 days
         if (isset($_POST['remember'])) {
-            setcookie("user_email", $email, time() + (7 * 24 * 60 * 60), "/");
-            setcookie("user_password", $password, time() + (7 * 24 * 60 * 60), "/");
+            setcookie("user_email", $email, time() + (7 * 24 * 60 * 60), "/"); // 7 days
+            setcookie("user_password", $_POST['password'], time() + (7 * 24 * 60 * 60), "/");
+        } else {
+            // Remove cookies if "Remember Me" is not checked
+            setcookie("user_email", "", time() - 3600, "/");
+            setcookie("user_password", "", time() - 3600, "/");
         }
 
         header("Location: ../pages/dashboard.php");
     } else {
-        header("Location: ../pages/login.php?error=Email atau password salah!");
+        header("Location: ../pages/login.php?error=Invalid email or password");
     }
 }
 ?>
