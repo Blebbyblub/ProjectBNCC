@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '/pages/dashboard.php';
+include '../config/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -18,9 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             setcookie("user_password", $password, time() + (7 * 24 * 60 * 60), "/");
         }
 
-        header("Location: C:\Users\Lenovo\Documents\CODING\WebDev\ProjectBNCC\pages\dashboard.php");
+        header("Location: ../pages/dashboard.php");
     } else {
-        header("Location: /pages/login.php?error=Email atau password salah!");
+        header("Location: ../pages/login.php?error=Email atau password salah!");
     }
 }
 ?>
