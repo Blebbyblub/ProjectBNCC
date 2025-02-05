@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../config/database.php';
+include '/pages/dashboard.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: C:\Users\Lenovo\Documents\CODING\WebDev\ProjectBNCC\pages\dashboard.php");
     } else {
-        header("Location: ../pages/login.php?error=Email atau password salah!");
+        header("Location: /pages/login.php?error=Email atau password salah!");
     }
 }
 ?>
