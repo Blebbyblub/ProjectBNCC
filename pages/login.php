@@ -12,12 +12,12 @@ if (isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="C:\Users\Lenovo\Documents\CODING\WebDev\ProjectBNCC\assets\css\style.css">
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form action="../process/login_process.php" method="POST">
+        <form action="C:\Users\Lenovo\Documents\CODING\WebDev\ProjectBNCC\process\login_process.php" method="POST">
             <label>Email:</label>
             <input type="email" name="email" placeholder="Enter your email" required>
 
