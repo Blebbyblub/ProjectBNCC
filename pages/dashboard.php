@@ -37,7 +37,7 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="container">
-        <h1>Welcome, <?= $_SESSION['user']['first_name']; ?>!</h1>
+        <h1>Welcome, <?= htmlspecialchars($_SESSION['user']['first_name']); ?>!</h1>
 
         <a href="profile.php" class="button">Profile</a>
 
@@ -45,33 +45,35 @@ $result = $conn->query($sql);
         
         <a href="user_create.php" class="button">Add New User</a>
 
-            <table>
-                <tr>
-                    <th>No</th>
-                    <th>Photo</th>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-                <?php $no = 1; while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= $no++; ?></td>
-                    <td>
-                        <?php if (!empty($row['photo'])): ?>
-                            <img src="../assets/images<?= htmlspecialchars($row['photo']); ?>" alt="User Photo" width="50">
-                        <?php else: ?>
-                            No Photo
-                        <?php endif; ?>
-                    </td>
-                    <td><?= $row['first_name'] . " " . $row['last_name']; ?></td>
-                    <td><?= $row['email']; ?></td>
-                    <td>
-                        <a href="user_edit.php?id=<?= $row['id']; ?>">Edit</a>
-                        <a href="user_delete.php?id=<?= $row['id']; ?>" class="delete-link">Delete</a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Photo</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Bio</th>
+                <th>Actions</th>
+            </tr>
+            <?php $no = 1; while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?= $no++; ?></td>
+                <td>
+                    <?php if (!empty($row['photo'])): ?>
+                        <img src="../assets/images<?= htmlspecialchars($row['photo']); ?>" alt="User Photo" width="50">
+                    <?php else: ?>
+                        No Photo
+                    <?php endif; ?>
+                </td>
+                <td><?= htmlspecialchars($row['first_name'] . " " . $row['last_name']); ?></td>
+                <td><?= htmlspecialchars($row['email']); ?></td>
+                <td><?= nl2br(htmlspecialchars($row['bio'])); ?></td> <!-- Displays bio safely -->
+                <td>
+                    <a href="user_edit.php?id=<?= $row['id']; ?>">Edit</a>
+                    <a href="user_delete.php?id=<?= $row['id']; ?>" class="delete-link">Delete</a>
+                </td>
+            </tr>
+            <?php endwhile; ?>
+        </table>
 
         <a href="../process/logout_process.php" class="logout">Logout</a>
     </div>
