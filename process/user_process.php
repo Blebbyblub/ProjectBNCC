@@ -30,17 +30,30 @@ function createUser($conn) {
 
         $errors = [];
 
-        // Validation and upload logic here...
+        // Handle photo upload
+        $photoName = null;
+        if (!empty($photo['name'])) {
+            $uploadDir = "../assets/images";
+            $photoName = uniqid() . "-" . basename($photo["name"]);
+            $targetFile = $uploadDir . $photoName;
 
+            // Ensure file is moved to the correct directory
+            if (!move_uploaded_file($photo["tmp_name"], $targetFile)) {
+                $errors[] = "Error uploading photo.";
+            }
+        }
+
+        // Generate user ID and password
         $userId = uniqid("U");
         $rawPassword = bin2hex(random_bytes(4));
         $hashedPassword = md5($rawPassword);
 
-        $stmt = $conn->prepare("INSERT INTO users (Id, first_name, last_name, email, password, bio) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $userId, $firstName, $lastName, $email, $hashedPassword, $bio);
+        // Insert user into the database
+        $stmt = $conn->prepare("INSERT INTO users (Id, first_name, last_name, email, password, bio, photo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $userId, $firstName, $lastName, $email, $hashedPassword, $bio, $photoName);
 
         if ($stmt->execute()) {
-            header("Location: ../pages/dashboard.php?msg=User created successfully");
+            header("Location: ../pages/dashboard.php?msg=User created successfully with password $rawPassword");
         } else {
             echo "Error: " . $stmt->error;
         }

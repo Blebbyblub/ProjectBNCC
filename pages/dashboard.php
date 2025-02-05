@@ -48,6 +48,7 @@ $result = $conn->query($sql);
             <table>
                 <tr>
                     <th>No</th>
+                    <th>Photo</th>
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Actions</th>
@@ -55,6 +56,13 @@ $result = $conn->query($sql);
                 <?php $no = 1; while ($row = $result->fetch_assoc()): ?>
                 <tr>
                     <td><?= $no++; ?></td>
+                    <td>
+                        <?php if (!empty($row['photo'])): ?>
+                            <img src="../assets/images<?= htmlspecialchars($row['photo']); ?>" alt="User Photo" width="50">
+                        <?php else: ?>
+                            No Photo
+                        <?php endif; ?>
+                    </td>
                     <td><?= $row['first_name'] . " " . $row['last_name']; ?></td>
                     <td><?= $row['email']; ?></td>
                     <td>

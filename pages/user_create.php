@@ -14,8 +14,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $bio = $_POST['bio'];
     $random_password = "User123"; // Default password
-    $password_hash = md5($random_password); // Hash password
+    $password_hash = md5($random_password);
+
     $photoName = null;
+
+    // Handle photo upload
+    if (!empty($_FILES['photo']['name'])) {
+        $uploadDir = "../assets/images";
+        $photoName = uniqid() . "-" . basename($_FILES["photo"]["name"]);
+        $targetFile = $uploadDir . $photoName;
+
+        if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
+            $error_message = "Error uploading photo.";
+        }
+    }
 
     // Check if email already exists
     $check_email = "SELECT * FROM users WHERE email='$email'";
@@ -24,8 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($email_result->num_rows > 0) {
         $error_message = "Email already exists!";
     } else {
-        $sql = "INSERT INTO users (id, first_name, last_name, email, password, bio)
-                VALUES ('$id', '$first_name', '$last_name', '$email', '$password_hash', '$bio')";
+        // Include the photo column in the insert query
+        $sql = "INSERT INTO users (id, first_name, last_name, email, password, bio, photo)
+                VALUES ('$id', '$first_name', '$last_name', '$email', '$password_hash', '$bio', '$photoName')";
         if ($conn->query($sql)) {
             header("Location: dashboard.php");
             exit();
