@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Validate and get the user ID
+//ID
 $userId = isset($_GET['id']) ? $_GET['id'] : null;
 
 if (!$userId) {

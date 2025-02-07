@@ -2,7 +2,7 @@
 require '../config/database.php';
 session_start();
 
-// Determine the action from the URL or form
+//Pilih function
 $action = $_GET['action'] ?? '';
 
 switch ($action) {
@@ -19,7 +19,6 @@ switch ($action) {
         echo "Invalid action!";
 }
 
-// Function to create user
 function createUser($conn) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $firstName = trim($_POST['first_name']);
@@ -30,7 +29,7 @@ function createUser($conn) {
 
         $errors = [];
 
-        // Handle photo upload
+        //Upload gambar
         $photoName = null;
         if (!empty($photo['name'])) {
             $uploadDir = "../assets/images";
@@ -43,12 +42,11 @@ function createUser($conn) {
             }
         }
 
-        // Generate user ID and password
+        //ID dan pass
         $userId = uniqid("U");
         $rawPassword = bin2hex(random_bytes(4));
         $hashedPassword = md5($rawPassword);
 
-        // Insert user into the database
         $stmt = $conn->prepare("INSERT INTO users (Id, first_name, last_name, email, password, bio, photo) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssss", $userId, $firstName, $lastName, $email, $hashedPassword, $bio, $photoName);
 
@@ -60,7 +58,6 @@ function createUser($conn) {
     }
 }
 
-// Function to edit user
 function editUser($conn) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userId = $_POST['user_id'];
@@ -80,7 +77,6 @@ function editUser($conn) {
     }
 }
 
-// Function to delete user
 function deleteUser($conn) {
     $userId = $_GET['user_id'] ?? '';
 

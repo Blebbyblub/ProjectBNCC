@@ -2,7 +2,7 @@
 session_start();
 include '../config/database.php';
 
-// If session is not set but cookies exist, auto-login the user
+//Auto-login kalau kue
 if (!isset($_SESSION['user']) && isset($_COOKIE['user_email']) && isset($_COOKIE['user_password'])) {
     $email = $_COOKIE['user_email'];
     $password = md5($_COOKIE['user_password']);
@@ -18,13 +18,13 @@ if (!isset($_SESSION['user']) && isset($_COOKIE['user_email']) && isset($_COOKIE
     }
 }
 
-// Redirect to login if session is still not set
+//Redirect to login kalau tdk kue
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
 
-// Fetch all users except admin
+//Ambil data
 $sql = "SELECT * FROM users WHERE id != 'A001'";
 $result = $conn->query($sql);
 ?>

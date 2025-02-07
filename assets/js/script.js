@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Search Functionality
+  //Search
   const searchInput = document.getElementById("searchInput");
   const tableRows = document.querySelectorAll("#userTable tbody tr");
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Delete Confirmation
+  //Delete
   const deleteLinks = document.querySelectorAll(".delete-link");
 
   deleteLinks.forEach((link) => {

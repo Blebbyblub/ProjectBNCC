@@ -2,7 +2,7 @@
 session_start();
 session_destroy();
 
-// Remove "Remember Me" cookies
+//Hapus kue
 setcookie("user_email", "", time() - 3600, "/");
 setcookie("user_password", "", time() - 3600, "/");
 

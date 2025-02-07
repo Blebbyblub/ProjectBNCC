@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) {
 }
 include '../config/database.php';
 
-// Get the logged-in user's data from the session
 $user = $_SESSION['user'];
 ?>
 

@@ -5,7 +5,7 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
-// Check if cookies exist
+//Cek kue
 $stored_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : "";
 $stored_password = isset($_COOKIE['user_password']) ? $_COOKIE['user_password'] : "";
 ?>

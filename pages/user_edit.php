@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
 
 include '../config/database.php';
 
-// Get user ID from URL
+//ID
 if (!isset($_GET['id'])) {
     header("Location: dashboard.php");
     exit();
@@ -15,7 +15,7 @@ if (!isset($_GET['id'])) {
 
 $user_id = $_GET['id'];
 
-// Fetch user data securely
+//Ambil data
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
@@ -28,20 +28,20 @@ if ($user_result->num_rows == 0) {
 
 $user = $user_result->fetch_assoc();
 
-// Handle form submission
+//Submisi edit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $bio = trim($_POST['bio']);
     $email = trim($_POST['email']);
 
-    // Server-side validation for first and last names
+    //Validasi
     if (strlen($first_name) > 255) {
         $error_message = "First name must be 255 characters or less.";
     } elseif (strlen($last_name) > 255) {
         $error_message = "Last name must be 255 characters or less.";
     } else {
-        // Check if email is unique
+        //Cek email
         $check_email_stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
         $check_email_stmt->bind_param("ss", $email, $user_id);
         $check_email_stmt->execute();
@@ -50,16 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($email_result->num_rows > 0) {
             $error_message = "Email already exists!";
         } else {
-            // Handle image upload
-            $photo_name = $user['photo']; // Keep existing photo by default
+            //Upload gambar
+            $photo_name = $user['photo'];
             if (!empty($_FILES['photo']['name'])) {
                 $upload_dir = "../assets/images/";
                 $new_photo_name = uniqid() . "-" . basename($_FILES["photo"]["name"]);
                 $target_file = $upload_dir . $new_photo_name;
 
-                // Validate file upload and move the file
                 if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
-                    // Delete old image if exists
                     if (!empty($user['photo']) && file_exists($upload_dir . $user['photo'])) {
                         unlink($upload_dir . $user['photo']);
                     }
@@ -69,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
 
-            // Update user profile
+            //Update user profile
             $update_stmt = $conn->prepare("UPDATE users SET first_name=?, last_name=?, email=?, bio=?, photo=? WHERE id=?");
             $update_stmt->bind_param("ssssss", $first_name, $last_name, $email, $bio, $photo_name, $user_id);
 

@@ -1,4 +1,4 @@
-/* ===== General Styles ===== */
+/*General*/
 body {
   font-family: Arial, sans-serif;
   background-color: #121212;
@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
 }
 
-/* ===== Container ===== */
+/*Container*/
 .edit-container,
 .create-container,
 .profile-container,
@@ -62,14 +62,14 @@ body {
   border-left: 5px solid #6c63ff;
 }
 
-/* ===== Headings ===== */
+/*Headings*/
 h1,
 h2 {
   text-align: center;
   color: #ffffff;
 }
 
-/* ===== Forms ===== */
+/*Forms*/
 form {
   display: flex;
   flex-direction: column;
@@ -91,12 +91,12 @@ input {
   border-radius: 4px;
 }
 
-/* Show Password Checkbox */
+/*Password Checkbox*/
 input[type="checkbox"] {
   width: auto;
 }
 
-/* Buttons */
+/*Buttons*/
 button,
 a.button {
   font-weight: bold;
@@ -118,7 +118,7 @@ a.button:hover {
   background: #0056b3;
 }
 
-/* ===== Table Styling ===== */
+/*Table Styling*/
 table {
   width: 99.7%;
   border-collapse: collapse;
@@ -140,7 +140,6 @@ th {
   color: white;
 }
 
-/* Larger Table Size */
 .container table {
   width: 100%;
   max-width: 100%;
@@ -149,7 +148,7 @@ th {
   overflow-x: auto;
 }
 
-/* Search Bar */
+/*Search Bar*/
 #searchInput {
   padding: 8px;
   width: 98%;
@@ -159,7 +158,7 @@ th {
   border: 1px solid #333;
 }
 
-/* Links */
+/*Links*/
 a {
   text-decoration: none;
   color: #007bff;
@@ -170,7 +169,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Logout Button */
+/*Logout Button*/
 .logout {
   position: absolute;
   top: 20px;
@@ -188,7 +187,7 @@ a:hover {
   background: #cc0000;
 }
 
-/* ===== Profile Page Styles ===== */
+/*Extra*/
 .success {
   color: #00ff00;
   font-weight: bold;
