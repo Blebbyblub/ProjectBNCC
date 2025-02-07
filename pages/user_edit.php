@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="edit-container">
         <h1>Edit User</h1>
 
         <?php if (isset($success_message)) echo "<p class='success'>$success_message</p>"; ?>

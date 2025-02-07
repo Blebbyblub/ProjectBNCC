@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="create-container">
         <h2>Create User</h2>
         <?php if (isset($error_message)) echo "<p class='error'>$error_message</p>"; ?>
         <form action="" method="POST" enctype="multipart/form-data">

@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="profile-container">
         <h1>Profile Page</h1>
 
         <?php if (isset($success_message)) echo "<p class='success'>$success_message</p>"; ?>
@@ -59,8 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Update Profile</button>
         </form>
 
-        <a href="dashboard.php">Back to Dashboard</a> |
-        <a href="../process/logout_process.php" class="logout">Logout</a>
+        <a href="dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

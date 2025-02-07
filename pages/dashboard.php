@@ -36,7 +36,8 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <div class="container">
+    <a href="../process/logout_process.php" class="logout">Logout</a>
+    <div class="dashboard-container">
         <h1>Welcome, <?= htmlspecialchars($_SESSION['user']['first_name']); ?>!</h1>
 
         <a href="profile.php" class="button">Profile</a>
@@ -74,8 +75,6 @@ $result = $conn->query($sql);
             </tr>
             <?php endwhile; ?>
         </table>
-
-        <a href="../process/logout_process.php" class="logout">Logout</a>
     </div>
 
     <script>

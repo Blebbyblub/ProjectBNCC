@@ -17,7 +17,7 @@ $stored_password = isset($_COOKIE['user_password']) ? $_COOKIE['user_password'] 
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="login-container">
         <h2>Login</h2>
         <form action="../process/login_process.php" method="POST">
             <label>Email:</label>
