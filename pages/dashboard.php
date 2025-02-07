@@ -34,9 +34,9 @@ $result = $conn->query($sql);
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 <body>
-    <a href="../process/logout_process.php" class="logout">Logout</a>
     <div class="dashboard-container">
         <h1>Welcome, <?= htmlspecialchars($_SESSION['user']['first_name']); ?>!</h1>
 
@@ -69,6 +69,7 @@ $result = $conn->query($sql);
                 <td><?= htmlspecialchars($row['email']); ?></td>
                 <td><?= nl2br(htmlspecialchars($row['bio'])); ?></td>
                 <td>
+                    <a href="user_view.php?id=<?= $row['id']; ?>">View</a>
                     <a href="user_edit.php?id=<?= $row['id']; ?>">Edit</a>
                     <a href="user_delete.php?id=<?= $row['id']; ?>" class="delete-link">Delete</a>
                 </td>
@@ -94,5 +95,8 @@ $result = $conn->query($sql);
             }
         });
     </script>
+    <footer>
+        &copy; @blebbyblub
+    </footer>
 </body>
 </html>
