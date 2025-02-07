@@ -23,7 +23,7 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
-    $image_path = "../assets/images" . $user['photo']; // Adjust based on your storage structure
+    $image_path = "../assets/images/" . $user['photo']; // Adjust based on your storage structure
 
     // Delete user record
     $delete_stmt = $conn->prepare("DELETE FROM users WHERE id = ?");

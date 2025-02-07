@@ -20,30 +20,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Handle photo upload
     if (!empty($_FILES['photo']['name'])) {
-        $uploadDir = "../assets/images";
+        $uploadDir = "../assets/images/";
         $photoName = uniqid() . "-" . basename($_FILES["photo"]["name"]);
         $targetFile = $uploadDir . $photoName;
-
-        if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
-            $error_message = "Error uploading photo.";
-        }
     }
 
     // Check if email already exists
-    $check_email = "SELECT * FROM users WHERE email='$email'";
-    $email_result = $conn->query($check_email);
+    $check_email = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($check_email);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $email_result = $stmt->get_result();
 
     if ($email_result->num_rows > 0) {
-        $error_message = "Email already exists!";
+        $error_message = "Email already exists! Please use a different email.";
     } else {
         // Include the photo column in the insert query
         $sql = "INSERT INTO users (id, first_name, last_name, email, password, bio, photo)
-                VALUES ('$id', '$first_name', '$last_name', '$email', '$password_hash', '$bio', '$photoName')";
-        if ($conn->query($sql)) {
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssss", $id, $first_name, $last_name, $email, $password_hash, $bio, $photoName);
+
+        if ($stmt->execute()) {
+            // Move the uploaded file only if the query succeeds
+            if (!empty($_FILES['photo']['name'])) {
+                if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFile)) {
+                    $error_message = "Error uploading photo.";
+                }
+            }
             header("Location: dashboard.php");
             exit();
         } else {
-            $error_message = "Error: " . $conn->error;
+            $error_message = "Error: " . $stmt->error;
         }
     }
 }
@@ -59,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h2>Create User</h2>
         <?php if (isset($error_message)) echo "<p class='error'>$error_message</p>"; ?>
-        <form action="../process/user_process.php?action=create" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
             <input type="text" name="first_name" placeholder="First Name" required>
             <input type="text" name="last_name" placeholder="Last Name" required>
             <input type="email" name="email" placeholder="Email" required>

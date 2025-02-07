@@ -45,7 +45,7 @@ $result = $conn->query($sql);
         
         <a href="user_create.php" class="button">Add New User</a>
 
-        <table>
+        <table id="userTable">
             <tr>
                 <th>No</th>
                 <th>Photo</th>
@@ -59,14 +59,14 @@ $result = $conn->query($sql);
                 <td><?= $no++; ?></td>
                 <td>
                     <?php if (!empty($row['photo'])): ?>
-                        <img src="../assets/images<?= htmlspecialchars($row['photo']); ?>" alt="User Photo" width="50">
+                        <img src="../assets/images/<?= htmlspecialchars($row['photo']); ?>" alt="User Photo" width="100">
                     <?php else: ?>
                         No Photo
                     <?php endif; ?>
                 </td>
                 <td><?= htmlspecialchars($row['first_name'] . " " . $row['last_name']); ?></td>
                 <td><?= htmlspecialchars($row['email']); ?></td>
-                <td><?= nl2br(htmlspecialchars($row['bio'])); ?></td> <!-- Displays bio safely -->
+                <td><?= nl2br(htmlspecialchars($row['bio'])); ?></td>
                 <td>
                     <a href="user_edit.php?id=<?= $row['id']; ?>">Edit</a>
                     <a href="user_delete.php?id=<?= $row['id']; ?>" class="delete-link">Delete</a>
@@ -78,6 +78,22 @@ $result = $conn->query($sql);
         <a href="../process/logout_process.php" class="logout">Logout</a>
     </div>
 
-    <script src="../assets/js/script.js"></script>
+    <script>
+        document.getElementById('searchInput').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchValue = this.value.toLowerCase().trim();
+                const tableRows = document.querySelectorAll('#userTable tr:not(:first-child)');
+
+                tableRows.forEach(row => {
+                    const fullNameCell = row.cells[2]; // Select the Full Name column
+                    if (fullNameCell) {
+                        const fullName = fullNameCell.textContent.toLowerCase();
+                        row.style.display = fullName.includes(searchValue) ? '' : 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
