@@ -44,9 +44,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($email_result->num_rows > 0) {
         $error_message = "Email already exists!";
     } else {
+        // Handle image upload
+        $photo_name = $user['photo']; // Keep existing photo by default
+        if (!empty($_FILES['photo']['name'])) {
+            $upload_dir = "../assets/images/";
+            $new_photo_name = uniqid() . "-" . basename($_FILES["photo"]["name"]);
+            $target_file = $upload_dir . $new_photo_name;
+
+            // Validate file upload and move the file
+            if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
+                // Delete old image if exists
+                if (!empty($user['photo']) && file_exists($upload_dir . $user['photo'])) {
+                    unlink($upload_dir . $user['photo']);
+                }
+                $photo_name = $new_photo_name;
+            } else {
+                $error_message = "Error uploading photo.";
+            }
+        }
+
         // Update user profile
-        $update_stmt = $conn->prepare("UPDATE users SET first_name=?, last_name=?, email=?, bio=? WHERE id=?");
-        $update_stmt->bind_param("sssss", $first_name, $last_name, $email, $bio, $user_id);
+        $update_stmt = $conn->prepare("UPDATE users SET first_name=?, last_name=?, email=?, bio=?, photo=? WHERE id=?");
+        $update_stmt->bind_param("ssssss", $first_name, $last_name, $email, $bio, $photo_name, $user_id);
 
         if ($update_stmt->execute()) {
             $success_message = "User profile updated successfully!";
@@ -72,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if (isset($success_message)) echo "<p class='success'>$success_message</p>"; ?>
         <?php if (isset($error_message)) echo "<p class='error'>$error_message</p>"; ?>
 
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <label>First Name:</label>
             <input type="text" name="first_name" value="<?= htmlspecialchars($user['first_name']); ?>" required>
 
@@ -84,6 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label>Bio:</label>
             <textarea name="bio"><?= htmlspecialchars($user['bio']); ?></textarea>
+
+            <label>Profile Photo:</label>
+            <?php if (!empty($user['photo'])): ?>
+                <img src="../assets/images/<?= htmlspecialchars($user['photo']); ?>" alt="User Photo" width="100">
+            <?php endif; ?>
+            <input type="file" name="photo">
 
             <button type="submit">Update User</button>
         </form>
